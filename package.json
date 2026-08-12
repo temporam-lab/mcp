@@ -4,7 +4,7 @@
   "description": "Temporam Public API MCP server (stdio)",
   "type": "module",
   "bin": {
-    "temporam-mcp": "./dist/index.js"
+    "temporam-mcp": "dist/index.js"
   },
   "files": [
     "dist",
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/temporam-lab/mcp.git"
+    "url": "git+https://github.com/temporam-lab/mcp.git"
   },
   "publishConfig": {
     "access": "public"
