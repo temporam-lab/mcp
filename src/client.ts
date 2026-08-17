@@ -7,7 +7,7 @@ export function getConfig(): { apiKey: string; baseUrl: string } {
   if (!apiKey) {
     throw new Error("TEMPORAM_API_KEY is required");
   }
-  const raw = process.env.TEMPORAM_API_BASE?.trim() || "https://api.temporam.cn";
+  const raw = process.env.TEMPORAM_API_BASE?.trim() || "https://api.temporam.com";
   return { apiKey, baseUrl: raw.replace(/\/+$/, "") };
 }
 

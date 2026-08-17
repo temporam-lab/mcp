@@ -16,7 +16,7 @@ Publish to npm first, then configure your client:
       "args": ["-y", "@temporam/mcp"],
       "env": {
         "TEMPORAM_API_KEY": "<API_KEY>",
-        "TEMPORAM_API_BASE": "https://api.temporam.cn"
+        "TEMPORAM_API_BASE": "https://api.temporam.com"
       }
     }
   }
@@ -26,7 +26,7 @@ Publish to npm first, then configure your client:
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `TEMPORAM_API_KEY` | yes | API key |
-| `TEMPORAM_API_BASE` | no | Defaults to `https://api.temporam.cn` |
+| `TEMPORAM_API_BASE` | no | Defaults to `https://api.temporam.com` |
 
 Keep the key in client env only. Never commit it.
 

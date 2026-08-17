@@ -13,13 +13,13 @@ test("getConfig requires key", () => {
 
 test("getConfig strips trailing slash on base", () => {
   process.env.TEMPORAM_API_KEY = "k";
-  process.env.TEMPORAM_API_BASE = "https://api.temporam.cn/";
-  assert.equal(getConfig().baseUrl, "https://api.temporam.cn");
+  process.env.TEMPORAM_API_BASE = "https://api.temporam.com/";
+  assert.equal(getConfig().baseUrl, "https://api.temporam.com");
 });
 
 test("request forwards status and error envelope", async () => {
   process.env.TEMPORAM_API_KEY = "k";
-  process.env.TEMPORAM_API_BASE = "https://api.temporam.cn";
+  process.env.TEMPORAM_API_BASE = "https://api.temporam.com";
   const original = globalThis.fetch;
   globalThis.fetch = (async () =>
     new Response(
