@@ -1,6 +1,6 @@
 {
   "name": "@temporam/mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Temporam Public API MCP server (stdio)",
   "type": "module",
   "bin": {
