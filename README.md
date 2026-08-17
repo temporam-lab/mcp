@@ -2,11 +2,9 @@
 
 Temporam Public API MCP server (stdio) for Cursor, Claude Code, Codex, and other MCP clients.
 
-Source: https://github.com/temporam-lab/mcp
+Calls **`/v3`** on `https://api.temporam.com`. Source: https://github.com/temporam-lab/mcp
 
 ## Install
-
-Publish to npm first, then configure your client:
 
 ```json
 {
@@ -23,14 +21,14 @@ Publish to npm first, then configure your client:
 }
 ```
 
+Cursor: `~/.cursor/mcp.json`. Claude Code / Codex use the same `command` + `args` + `env` shape.
+
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `TEMPORAM_API_KEY` | yes | API key |
+| `TEMPORAM_API_KEY` | yes | API key from the Temporam console |
 | `TEMPORAM_API_BASE` | no | Defaults to `https://api.temporam.com` |
 
 Keep the key in client env only. Never commit it.
-
-End-user install needs **`npm publish`** of `@temporam/mcp`. Pushing this GitHub repo alone is not enough for `npx -y @temporam/mcp`.
 
 ## Tools
 

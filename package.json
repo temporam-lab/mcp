@@ -2,6 +2,7 @@
   "name": "@temporam/mcp",
   "version": "0.1.1",
   "description": "Temporam Public API MCP server (stdio)",
+  "homepage": "https://github.com/temporam-lab/mcp",
   "type": "module",
   "bin": {
     "temporam-mcp": "dist/index.js"
