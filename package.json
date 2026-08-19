@@ -1,6 +1,6 @@
 {
   "name": "@temporam/mcp",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Temporam Public API MCP server (stdio)",
   "homepage": "https://github.com/temporam-lab/mcp",
   "type": "module",
