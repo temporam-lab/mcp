@@ -19,7 +19,8 @@ export function registerTools(server: McpServer): void {
   server.registerTool(
     "list_domains",
     {
-      description: "List Temporam system domains. Does not consume quota.",
+      description:
+        "List domains available for inbound addresses. To receive mail, choose a domain and generate a high-entropy local part client-side; do not call create_mailbox. Does not consume quota.",
       inputSchema: {},
     },
     async () => call("GET", "/v3/domains"),
@@ -29,9 +30,11 @@ export function registerTools(server: McpServer): void {
     "list_emails",
     {
       description:
-        "List inbound messages for an address. May claim unclaimed mail and consume inbound quota. Returns summaries, not full bodies.",
+        "List inbound messages for an address on a system domain. The address does not need to be created or registered as a mailbox. May claim unclaimed mail and consume inbound quota. Returns summaries, not full bodies.",
       inputSchema: {
-        email: z.string().describe("Mailbox address to read"),
+        email: z
+          .string()
+          .describe("Inbound address generated client-side from a list_domains result; no mailbox creation required"),
         page: z.number().int().min(1).max(100).optional(),
         limit: z.number().int().min(1).max(50).optional(),
       },
@@ -44,9 +47,11 @@ export function registerTools(server: McpServer): void {
     "get_latest_email",
     {
       description:
-        "Get the latest inbound message for an address. May consume 1 inbound point if unclaimed. Returns full content.",
+        "Get the latest inbound message for an address on a system domain. The address does not need to be created or registered as a mailbox. May consume 1 inbound point if unclaimed. Returns full content.",
       inputSchema: {
-        email: z.string().describe("Mailbox address to read"),
+        email: z
+          .string()
+          .describe("Inbound address generated client-side from a list_domains result; no mailbox creation required"),
       },
     },
     async ({ email }) => call("GET", "/v3/emails/latest", { query: { email } }),
@@ -68,7 +73,7 @@ export function registerTools(server: McpServer): void {
     "create_mailbox",
     {
       description:
-        "Create a mailbox on a system domain. Does not consume monthly quota. Counted against MaxMailboxes.",
+        "Create an active outbound sender mailbox for send_message. It is not required to receive inbound mail. Does not consume monthly quota. Counted against MaxMailboxes.",
       inputSchema: {
         domain: z.string().describe("Domain from list_domains"),
         local_part: z.string().optional().describe("Optional local part; omitted → random"),
@@ -83,7 +88,8 @@ export function registerTools(server: McpServer): void {
   server.registerTool(
     "list_mailboxes",
     {
-      description: "List the caller's active mailboxes. Does not consume monthly quota.",
+      description:
+        "List the caller's active outbound sender mailboxes. Does not consume monthly quota.",
       inputSchema: {
         page: z.number().int().min(1).max(100).optional(),
         limit: z.number().int().min(1).max(50).optional(),
@@ -95,7 +101,7 @@ export function registerTools(server: McpServer): void {
   server.registerTool(
     "get_mailbox",
     {
-      description: "Get one mailbox by id (decimal string).",
+      description: "Get one outbound sender mailbox by id (decimal string).",
       inputSchema: {
         id: z.string().describe("Mailbox id"),
       },
@@ -106,7 +112,8 @@ export function registerTools(server: McpServer): void {
   server.registerTool(
     "delete_mailbox",
     {
-      description: "Soft-delete a mailbox. It can no longer be used as send from.",
+      description:
+        "Soft-delete an outbound sender mailbox. It can no longer be used as send from.",
       inputSchema: {
         id: z.string().describe("Mailbox id"),
       },
@@ -120,7 +127,7 @@ export function registerTools(server: McpServer): void {
       description:
         "Send one email. Consumes 1 outbound point on success. Not idempotent. Hobby plans cannot send. Provide text and/or html. No attachments.",
       inputSchema: {
-        from: z.string().describe("Active mailbox address you own"),
+        from: z.string().describe("Active outbound sender mailbox address you own"),
         to: z.string(),
         subject: z.string(),
         text: z.string().optional(),

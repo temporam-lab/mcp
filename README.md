@@ -30,6 +30,11 @@ Cursor: `~/.cursor/mcp.json`. Claude Code / Codex use the same `command` + `args
 
 Keep the key in client env only. Never commit it.
 
+## Receiving vs sending
+
+- **Inbound address:** call `list_domains`, choose a returned domain, and generate a high-entropy local part client-side (for example, a UUID). The address does not need to be created or registered. Give it to the third party, then poll `list_emails` or `get_latest_email`.
+- **Outbound sender mailbox:** create one with `create_mailbox` only when you need an active `from` address for `send_message`. Sender mailboxes are not required for receiving.
+
 ## Tools
 
 | Tool | API |
@@ -45,4 +50,4 @@ Keep the key in client env only. Never commit it.
 | `send_message` | `POST /v3/messages` |
 | `get_message` | `GET /v3/messages/:id` |
 
-Inbound read tools may consume inbound quota and may return full message content. Hobby plans cannot send.
+Inbound read tools may claim mail and consume inbound quota. List results contain summaries; `get_latest_email` and `get_email` return full content. Hobby plans cannot send.

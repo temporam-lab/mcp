@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
+import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { getConfig, request, toolResult } from "../src/client.ts";
+import { registerTools } from "../src/tools.ts";
 
 afterEach(() => {
   delete process.env.TEMPORAM_API_KEY;
@@ -61,4 +63,27 @@ test("request success returns body without wrapping status", async () => {
   } finally {
     globalThis.fetch = original;
   }
+});
+
+test("tool descriptions separate inbound addresses from outbound sender mailboxes", () => {
+  type ToolConfig = {
+    description?: string;
+    inputSchema?: Record<string, { description?: string }>;
+  };
+  const tools = new Map<string, ToolConfig>();
+  const server = {
+    registerTool(name: string, config: ToolConfig) {
+      tools.set(name, config);
+    },
+  } as unknown as McpServer;
+
+  registerTools(server);
+
+  const listEmails = tools.get("list_emails");
+  assert.match(listEmails?.description ?? "", /does not need to be created/i);
+  assert.match(listEmails?.inputSchema?.email.description ?? "", /inbound address/i);
+
+  const createMailbox = tools.get("create_mailbox");
+  assert.match(createMailbox?.description ?? "", /outbound sender/i);
+  assert.match(createMailbox?.description ?? "", /not required.*receiv/i);
 });
