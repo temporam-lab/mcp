@@ -39,6 +39,7 @@ Keep the key in client env only. Never commit it.
 
 | Tool | API |
 |------|-----|
+| `get_me` | `GET /v3/me` |
 | `list_domains` | `GET /v3/domains` |
 | `list_emails` | `GET /v3/emails` |
 | `get_latest_email` | `GET /v3/emails/latest` |
@@ -50,4 +51,4 @@ Keep the key in client env only. Never commit it.
 | `send_message` | `POST /v3/messages` |
 | `get_message` | `GET /v3/messages/:id` |
 
-Inbound read tools may claim mail and consume inbound quota. List results contain summaries; `get_latest_email` and `get_email` return full content. Hobby plans cannot send.
+Inbound read tools may claim mail and consume inbound quota. List results contain summaries; `get_latest_email` and `get_email` return full content. Hobby plans cannot send. `get_me` is read-only and does not consume quota.

@@ -79,6 +79,9 @@ test("tool descriptions separate inbound addresses from outbound sender mailboxe
 
   registerTools(server);
 
+  const getMe = tools.get("get_me");
+  assert.match(getMe?.description ?? "", /does not consume quota/i);
+
   const listEmails = tools.get("list_emails");
   assert.match(listEmails?.description ?? "", /does not need to be created/i);
   assert.match(listEmails?.inputSchema?.email.description ?? "", /inbound address/i);

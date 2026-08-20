@@ -17,6 +17,16 @@ async function call(
 
 export function registerTools(server: McpServer): void {
   server.registerTool(
+    "get_me",
+    {
+      description:
+        "Current account snapshot: name, email, plan code, inbound/outbound usage, mailbox slots, period bounds. Does not consume quota. Not consume-history.",
+      inputSchema: {},
+    },
+    async () => call("GET", "/v3/me"),
+  );
+
+  server.registerTool(
     "list_domains",
     {
       description:
